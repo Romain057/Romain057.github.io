@@ -94,6 +94,19 @@
 
     /* --- Filtre par compétence ---------------------------------------- */
     .filter { padding: 28px 0 8px; }
+    .filter details > summary {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      list-style: none; cursor: pointer; user-select: none;
+    }
+    .filter details > summary::-webkit-details-marker { display: none; }
+    .filter details > summary::after {
+      content: ""; width: 9px; height: 9px; margin-right: 4px;
+      border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent);
+      transform: rotate(45deg) translateY(-3px); transition: transform 0.2s;
+    }
+    .filter details[open] > summary::after { transform: rotate(-135deg) translateY(-3px); }
+    .filter details > summary .hint-open { margin-left: auto; font-size: 12px; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 400; }
+    .filter details[open] > summary .hint-open { display: none; }
     .filter-groups { display: grid; gap: 14px; }
     .filter-group h3 { margin: 0 0 6px; font-size: 14px; font-weight: 500; color: var(--muted); }
     .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
@@ -220,6 +233,7 @@
       var app = document.getElementById("app");
       var selected = [];          // compétences sélectionnées dans le filtre
       var lastListHash = "#";     // pour revenir à la liste filtrée
+      var filterOpen = false;     // filtre déplié ou replié
 
       /* --- Utilitaires ------------------------------------------------ */
       function esc(s) {
@@ -277,7 +291,9 @@
         html += '<main class="container">';
 
         // Filtre
-        html += '<section class="filter" aria-labelledby="t-filter"><h2 class="section-title" id="t-filter">Filtrer par compétence</h2><div class="filter-groups">';
+        html += '<section class="filter" aria-label="Filtrer par compétence"><details id="filter-details"' + (filterOpen ? " open" : "") + '>' +
+          '<summary class="section-title">Filtrer par compétence<span class="hint-open">Cliquer pour déplier</span></summary>' +
+          '<div class="filter-groups">';
         filterGroups().forEach(function (g) {
           html += '<div class="filter-group"><h3>' + esc(g.name) + '</h3><ul class="chips">';
           g.skills.forEach(function (s) {
@@ -287,7 +303,7 @@
           });
           html += '</ul></div>';
         });
-        html += '</div>';
+        html += '</div></details>';
 
         var label;
         if (!selected.length) {
@@ -332,6 +348,8 @@
         });
         var clear = document.getElementById("clear");
         if (clear) clear.addEventListener("click", function () { setSelected([]); });
+        var det = document.getElementById("filter-details");
+        if (det) det.addEventListener("toggle", function () { filterOpen = det.open; });
       }
 
       function metaHtml(p) {
@@ -422,6 +440,7 @@
         }
         if (h.indexOf("#competences=") === 0) {
           selected = h.slice(13).split(",").map(decodeURIComponent).filter(function (s) { return counts[s]; });
+          if (selected.length) filterOpen = true;   // arrivée par un lien filtré : on montre le filtre
         } else {
           selected = [];
         }
