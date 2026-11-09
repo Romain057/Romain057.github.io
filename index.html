@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Romain Mazoyer — Portfolio</title>
+  <meta name="description" content="Portfolio de Romain Mazoyer, ingénieur IA junior : projets en vision par ordinateur, LLM et MLOps, filtrables par compétence.">
+  <meta property="og:title" content="Romain Mazoyer — Portfolio">
+  <meta property="og:description" content="Projets en vision par ordinateur, LLM et MLOps, filtrables par compétence.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23800020'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='28' font-weight='700' fill='white' text-anchor='middle'%3ERM%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #800020;
+      --accent-soft: #f6e9ec;
+      --on-accent: #ffffff;
+      --bg: #fbfaf8;
+      --card: #ffffff;
+      --text: #1f1d1d;
+      --muted: #5e5a5a;
+      --border: #e8e2e0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #e0708a;
+        --accent-soft: #3a1f26;
+        --on-accent: #1a1012;
+        --bg: #151314;
+        --card: #1e1b1c;
+        --text: #f1eded;
+        --muted: #b5adae;
+        --border: #332d2e;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-weight: 300; font-size: 16px; line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+    strong { font-weight: 500; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88em;
+      background: var(--accent-soft); color: var(--text); padding: 1px 6px; border-radius: 5px;
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+    /* --- Barre du haut ------------------------------------------------ */
+    nav.top {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(8px); border-bottom: 1px solid var(--border);
+    }
+    nav.top .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 56px; }
+    nav.top .brand { font-weight: 600; color: var(--text); }
+    nav.top .brand:hover { text-decoration: none; color: var(--accent); }
+    nav.top .ext { display: flex; gap: 18px; font-size: 14px; }
+    nav.top .ext a { color: var(--muted); }
+    nav.top .ext a:hover { color: var(--accent); text-decoration: none; }
+
+    /* --- En-tête ------------------------------------------------------ */
+    header.hero { padding: 64px 0 28px; }
+    .hero h1 { margin: 0; color: var(--accent); font-size: clamp(34px, 7vw, 50px); font-weight: 600; line-height: 1.1; }
+    .hero .role { margin: 10px 0 0; font-size: 20px; font-weight: 500; }
+    .hero .pitch { margin: 16px 0 0; max-width: 660px; color: var(--muted); font-size: 17px; }
+    .hero .row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
+    .status {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent); font-size: 14px; font-weight: 500;
+    }
+    .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .btn {
+      display: inline-block; padding: 9px 16px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--card); color: var(--text); font-size: 15px; font-weight: 500;
+    }
+    .btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+    .btn.primary:hover { color: var(--on-accent); filter: brightness(1.12); }
+
+    /* --- Titres de section -------------------------------------------- */
+    .section-title {
+      margin: 0 0 18px; padding-bottom: 8px; color: var(--accent);
+      font-size: 14px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      border-bottom: 1px solid var(--text);
+    }
+
+    /* --- Filtre par compétence ---------------------------------------- */
+    .filter { padding: 28px 0 8px; }
+    .filter-groups { display: grid; gap: 14px; }
+    .filter-group h3 { margin: 0 0 6px; font-size: 14px; font-weight: 500; color: var(--muted); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px;
+      border: 1px solid transparent; background: var(--accent-soft); color: var(--accent);
+      font: inherit; font-size: 13px; font-weight: 400; line-height: 1.5; cursor: pointer;
+    }
+    .chip:hover { border-color: var(--accent); }
+    .chip .count { font-size: 11px; opacity: 0.75; }
+    .chip[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+    .chip.planned {
+      background: transparent; border: 1px dashed var(--accent); color: var(--muted); cursor: default;
+    }
+    .chip.planned:hover { border-color: var(--accent); }
+    .chip.match { background: var(--accent); color: var(--on-accent); }
+    .filter-bar {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+      margin-top: 18px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--card);
+    }
+    .filter-bar p { margin: 0; font-size: 15px; }
+    .linkbtn {
+      background: none; border: none; padding: 0; font: inherit; font-size: 14px; font-weight: 500;
+      color: var(--accent); cursor: pointer;
+    }
+    .linkbtn:hover { text-decoration: underline; }
+    .linkbtn[hidden] { display: none; }
+
+    /* --- Grille de projets -------------------------------------------- */
+    .projects { padding: 28px 0 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+    .card {
+      display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px;
+    }
+    .card:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+    .meta { display: flex; flex-wrap: wrap; gap: 6px 10px; font-size: 13px; color: var(--muted); }
+    .badge {
+      padding: 1px 9px; border-radius: 6px; border: 1px solid var(--border);
+      font-size: 12px; font-weight: 500; color: var(--text);
+    }
+    .card h3 { margin: 10px 0 0; font-size: 18px; font-weight: 600; line-height: 1.35; }
+    .card h3 a { color: var(--text); }
+    .card h3 a:hover { color: var(--accent); text-decoration: none; }
+    .card p.summary { margin: 10px 0 0; font-size: 15px; color: var(--muted); flex: 1; }
+    .card .chips { margin-top: 14px; }
+    .card .chip { cursor: pointer; }
+    .card .more { margin-top: 16px; font-weight: 500; font-size: 15px; }
+    .empty { padding: 28px; text-align: center; color: var(--muted); border: 1px dashed var(--border); border-radius: 14px; }
+
+    /* --- Page projet -------------------------------------------------- */
+    .detail { padding: 32px 0 24px; }
+    .back { display: inline-block; margin-bottom: 20px; font-weight: 500; font-size: 15px; }
+    .detail h1 { margin: 10px 0 0; font-size: clamp(26px, 5vw, 36px); font-weight: 600; line-height: 1.2; }
+    .detail .summary { margin: 14px 0 0; font-size: 18px; color: var(--muted); max-width: 720px; }
+    .detail .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .note {
+      margin-top: 18px; padding: 10px 14px; border-left: 3px solid var(--accent);
+      background: var(--accent-soft); border-radius: 0 10px 10px 0; font-size: 15px;
+    }
+    .detail-body { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 40px; margin-top: 36px; }
+    .detail-body section + section { margin-top: 34px; }
+    .detail-body p { margin: 0 0 12px; }
+    .detail-body ul.items { margin: 0; padding-left: 20px; }
+    .detail-body ul.items li { margin: 8px 0; }
+    .detail-body ul.items li::marker { color: var(--accent); }
+    .decision { padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
+    .decision + .decision { margin-top: 12px; }
+    .decision h4 { margin: 0 0 4px; font-size: 16px; font-weight: 500; }
+    .decision p { margin: 0; font-size: 15px; }
+    aside.side { align-self: start; position: sticky; top: 76px; }
+    aside.side h2 { margin: 0 0 10px; font-size: 14px; font-weight: 500; color: var(--muted); }
+    aside.side .block + .block { margin-top: 24px; }
+    aside.side .hint { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+
+    footer { margin-top: 40px; padding: 28px 0 44px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
+
+    @media (max-width: 760px) {
+      .detail-body { grid-template-columns: 1fr; gap: 28px; }
+      aside.side { position: static; order: -1; }
+    }
+    @media (max-width: 560px) {
+      nav.top .ext { display: none; }
+      header.hero { padding: 44px 0 20px; }
+      .hero .role { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="top" aria-label="Navigation">
+    <div class="container">
+      <a class="brand" href="#">Romain Mazoyer</a>
+      <div class="ext">
+        <a href="https://github.com/Romain057">GitHub</a>
+        <a href="https://www.linkedin.com/in/romain-mazoyer-129ab229a/">LinkedIn</a>
+        <a href="mailto:mazoyerrom0507@gmail.com">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="app"></div>
+
+  <noscript>
+    <div class="container"><p>Ce portfolio a besoin de JavaScript pour afficher les projets.</p></div>
+  </noscript>
+
+  <footer>
+    <div class="container">
+      Romain Mazoyer · Paris ·
+      <a href="mailto:mazoyerrom0507@gmail.com">mazoyerrom0507@gmail.com</a> ·
+      <a href="https://github.com/Romain057">GitHub</a> ·
+      <a href="https://www.linkedin.com/in/romain-mazoyer-129ab229a/">LinkedIn</a>
+    </div>
+  </footer>
+
+  <script src="projects.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      var PROJECTS = window.PROJECTS || [];
+      var GROUPS = window.SKILL_GROUPS || [];
+      var app = document.getElementById("app");
+      var selected = [];          // compétences sélectionnées dans le filtre
+      var lastListHash = "#";     // pour revenir à la liste filtrée
+
+      /* --- Utilitaires ------------------------------------------------ */
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+      }
+      function listHash(skills) {
+        return skills.length ? "#competences=" + skills.map(encodeURIComponent).join(",") : "#";
+      }
+      function plural(n, one, many) { return n + " " + (n > 1 ? many : one); }
+      function joinFr(arr) {
+        if (arr.length <= 1) return arr.join("");
+        return arr.slice(0, -1).join(", ") + " et " + arr[arr.length - 1];
+      }
+
+      /* Nombre de projets par compétence pratiquée */
+      var counts = {};
+      PROJECTS.forEach(function (p) {
+        p.skills.forEach(function (s) { counts[s] = (counts[s] || 0) + 1; });
+      });
+
+      /* Groupes du filtre : uniquement les compétences pratiquées */
+      function filterGroups() {
+        var known = {};
+        var groups = GROUPS.map(function (g) {
+          var skills = g.skills.filter(function (s) { known[s] = true; return counts[s]; });
+          return { name: g.name, skills: skills };
+        });
+        var others = Object.keys(counts).filter(function (s) { return !known[s]; }).sort();
+        if (others.length) groups.push({ name: "Autres", skills: others });
+        return groups.filter(function (g) { return g.skills.length; });
+      }
+
+      function matches(p) {
+        return selected.every(function (s) { return p.skills.indexOf(s) !== -1; });
+      }
+
+      /* --- Vue liste -------------------------------------------------- */
+      function renderList() {
+        var visible = PROJECTS.filter(matches);
+        var html = "";
+
+        html += '<header class="hero"><div class="container">' +
+          '<h1>Romain Mazoyer</h1>' +
+          '<p class="role">Ingénieur IA junior · AI / ML engineer</p>' +
+          '<p class="pitch">Mes projets en vision par ordinateur, LLM et MLOps, avec pour chacun ce que j\'ai construit et pourquoi. Filtrez par compétence pour voir où je l\'ai pratiquée.</p>' +
+          '<div class="row">' +
+            '<span class="status">Disponible pour un CDI · Paris</span>' +
+            '<a class="btn primary" href="CV_2026_AI_engineer_Romain_MAZOYER.pdf">CV (PDF)</a>' +
+            '<a class="btn" href="https://github.com/Romain057">GitHub</a>' +
+            '<a class="btn" href="https://www.linkedin.com/in/romain-mazoyer-129ab229a/">LinkedIn</a>' +
+          '</div></div></header>';
+
+        html += '<main class="container">';
+
+        // Filtre
+        html += '<section class="filter" aria-labelledby="t-filter"><h2 class="section-title" id="t-filter">Filtrer par compétence</h2><div class="filter-groups">';
+        filterGroups().forEach(function (g) {
+          html += '<div class="filter-group"><h3>' + esc(g.name) + '</h3><ul class="chips">';
+          g.skills.forEach(function (s) {
+            var on = selected.indexOf(s) !== -1;
+            html += '<li><button type="button" class="chip" data-skill="' + esc(s) + '" aria-pressed="' + on + '">' +
+              esc(s) + ' <span class="count">' + counts[s] + '</span></button></li>';
+          });
+          html += '</ul></div>';
+        });
+        html += '</div>';
+
+        var label;
+        if (!selected.length) {
+          label = plural(PROJECTS.length, "projet", "projets") + " · cliquez sur une compétence pour filtrer";
+        } else {
+          label = '<strong>' + plural(visible.length, "projet", "projets") + '</strong> ' +
+            (visible.length > 1 ? "mobilisent " : "mobilise ") + esc(joinFr(selected));
+        }
+        html += '<div class="filter-bar" role="status"><p>' + label + '</p>' +
+          '<button type="button" class="linkbtn" id="clear"' + (selected.length ? "" : " hidden") + '>Effacer le filtre</button></div>';
+        html += '</section>';
+
+        // Projets
+        html += '<section class="projects" aria-labelledby="t-projects"><h2 class="section-title" id="t-projects">Projets</h2>';
+        if (!visible.length) {
+          html += '<div class="empty">Aucun projet ne combine toutes ces compétences. Retirez-en une du filtre.</div>';
+        } else {
+          html += '<div class="grid">';
+          visible.forEach(function (p) {
+            html += '<article class="card">' + metaHtml(p) +
+              '<h3><a href="#projet/' + encodeURIComponent(p.slug) + '">' + esc(p.title) + '</a></h3>' +
+              '<p class="summary">' + p.summary + '</p>' +
+              '<ul class="chips">';
+            p.skills.forEach(function (s) {
+              var on = selected.indexOf(s) !== -1;
+              html += '<li><button type="button" class="chip' + (on ? " match" : "") + '" data-skill="' + esc(s) + '" aria-pressed="' + on + '">' + esc(s) + '</button></li>';
+            });
+            p.planned.forEach(function (s) {
+              html += '<li><span class="chip planned" title="En cours ou prévu">' + esc(s) + '</span></li>';
+            });
+            html += '</ul><a class="more" href="#projet/' + encodeURIComponent(p.slug) + '">Lire le détail →</a></article>';
+          });
+          html += '</div>';
+        }
+        html += '</section></main>';
+
+        app.innerHTML = html;
+        document.title = "Romain Mazoyer — Portfolio";
+
+        app.querySelectorAll("button.chip").forEach(function (b) {
+          b.addEventListener("click", function () { toggleSkill(b.getAttribute("data-skill")); });
+        });
+        var clear = document.getElementById("clear");
+        if (clear) clear.addEventListener("click", function () { setSelected([]); });
+      }
+
+      function metaHtml(p) {
+        var m = '<div class="meta"><span class="badge">' + esc(p.type) + '</span>';
+        if (p.org) m += '<span>' + esc(p.org) + '</span>';
+        m += '<span>' + esc(p.period) + '</span><span>' + esc(p.status) + '</span></div>';
+        return m;
+      }
+
+      function toggleSkill(s) {
+        var i = selected.indexOf(s);
+        var next = selected.slice();
+        if (i === -1) next.push(s); else next.splice(i, 1);
+        setSelected(next);
+      }
+
+      function setSelected(skills) {
+        selected = skills;
+        lastListHash = listHash(skills);
+        history.replaceState(null, "", lastListHash === "#" ? location.pathname + location.search : lastListHash);
+        var y = window.scrollY;
+        renderList();
+        window.scrollTo(0, y);
+      }
+
+      /* --- Vue détail ------------------------------------------------- */
+      function renderDetail(p) {
+        var html = '<main class="container detail">';
+        html += '<a class="back" href="' + lastListHash + '">← Tous les projets</a>';
+        html += metaHtml(p);
+        html += '<h1>' + esc(p.title) + '</h1>';
+        html += '<p class="summary">' + p.summary + '</p>';
+        if (p.links && p.links.length) {
+          html += '<div class="links">';
+          p.links.forEach(function (l, i) {
+            html += '<a class="btn' + (i === 0 ? " primary" : "") + '" href="' + esc(l.url) + '">' + esc(l.label) + '</a>';
+          });
+          html += '</div>';
+        }
+        if (p.note) html += '<p class="note">' + p.note + '</p>';
+
+        html += '<div class="detail-body"><div>';
+        p.sections.forEach(function (sec) {
+          html += '<section><h2 class="section-title">' + esc(sec.title) + '</h2>';
+          (sec.paragraphs || []).forEach(function (t) { html += '<p>' + t + '</p>'; });
+          if (sec.items && sec.items.length) {
+            html += '<ul class="items">';
+            sec.items.forEach(function (t) { html += '<li>' + t + '</li>'; });
+            html += '</ul>';
+          }
+          (sec.decisions || []).forEach(function (d) {
+            html += '<div class="decision"><h4>' + esc(d.title) + '</h4><p>' + d.text + '</p></div>';
+          });
+          html += '</section>';
+        });
+        html += '</div>';
+
+        html += '<aside class="side"><div class="block"><h2>Compétences mobilisées</h2><ul class="chips">';
+        p.skills.forEach(function (s) {
+          html += '<li><a class="chip" href="' + listHash([s]) + '">' + esc(s) + '</a></li>';
+        });
+        html += '</ul><p class="hint">Cliquez sur une compétence pour voir les autres projets où je l\'ai pratiquée.</p></div>';
+        if (p.planned.length) {
+          html += '<div class="block"><h2>En cours ou prévu</h2><ul class="chips">';
+          p.planned.forEach(function (s) { html += '<li><span class="chip planned">' + esc(s) + '</span></li>'; });
+          html += '</ul></div>';
+        }
+        html += '</aside></div></main>';
+
+        app.innerHTML = html;
+        document.title = p.title + " — Romain Mazoyer";
+        window.scrollTo(0, 0);
+      }
+
+      function renderNotFound() {
+        app.innerHTML = '<main class="container detail"><a class="back" href="#">← Tous les projets</a>' +
+          '<h1>Projet introuvable</h1><p class="summary">Ce lien ne correspond à aucun projet.</p></main>';
+      }
+
+      /* --- Routage par l'ancre de l'URL ------------------------------- */
+      function route() {
+        var h = location.hash;
+        if (h.indexOf("#projet/") === 0) {
+          var slug = decodeURIComponent(h.slice(8));
+          var p = PROJECTS.filter(function (x) { return x.slug === slug; })[0];
+          if (p) renderDetail(p); else renderNotFound();
+          return;
+        }
+        if (h.indexOf("#competences=") === 0) {
+          selected = h.slice(13).split(",").map(decodeURIComponent).filter(function (s) { return counts[s]; });
+        } else {
+          selected = [];
+        }
+        lastListHash = listHash(selected);
+        renderList();
+      }
+
+      window.addEventListener("hashchange", route);
+      route();
+    })();
+  </script>
+</body>
+</html>
